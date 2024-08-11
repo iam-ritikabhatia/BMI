@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection & BMI Estimation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Face Detection & BMI Estimation</h1>
+        <div class="video-container">
+            <img id="video_feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+        </div>
+        <div class="info">
+            <p id="bmi">BMI: Loading...</p>
+        </div>
+    </div>
+    <script>
+        setInterval(function() {
+            fetch('/bmi')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('bmi').textContent = 'BMI: ' + data.bmi;
+            })
+            .catch(error => console.error('Error fetching BMI:', error));
+        }, 1000);
+    </script>
+</body>
+</html>
